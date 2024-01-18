@@ -29,11 +29,11 @@ public class Topic {
     @Column
     private String title;
     @Column
-    private String description;
+    private String content;
 
-    public Topic(String title, String description) {
+    public Topic(String title, String content) {
         this.title = title;
-        this.description = description;
+        this.content = content;
     }
 
     @Override

@@ -21,8 +21,8 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> saveTopic(Principal principal, @RequestBody TitleAndDescription titleAndDescription) {
-        Long id = topicService.save(principal.getName(), titleAndDescription);
+    public ResponseEntity<Long> saveTopic(Principal principal, @RequestBody TitleAndContent titleAndContent) {
+        Long id = topicService.save(principal.getName(), titleAndContent);
         return ResponseEntity.ok(id);
     }
 

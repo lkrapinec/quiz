@@ -3,7 +3,7 @@ package hr.digob.quiz.quiz;
 import lombok.Data;
 
 @Data
-public class TitleAndDescription {
+public class TitleAndContent {
     private String title;
-    private String description;
+    private String content;
 }

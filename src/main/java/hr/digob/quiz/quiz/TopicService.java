@@ -38,9 +38,9 @@ public class TopicService {
         return topics.stream().map(topic -> mapper.convertValue(topic, TopicDto.class)).toList();
     }
 
-    public Long save(String username, TitleAndDescription titleAndDescription) {
-        String title = titleAndDescription.getTitle();
-        String description = titleAndDescription.getDescription();
+    public Long save(String username, TitleAndContent titleAndContent) {
+        String title = titleAndContent.getTitle();
+        String description = titleAndContent.getContent();
         Topic topic = new Topic(title, description);
         userService.findByUsername(username).ifPresent(topic::setUser);
 
