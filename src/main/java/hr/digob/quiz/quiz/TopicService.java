@@ -73,7 +73,7 @@ public class TopicService {
 
         QuestionsDto questions = restTemplate.postForObject("http://127.0.0.1:5000/generate-questions", map, QuestionsDto.class);
 
-        return questions.getQuiz();
+        return questions != null ? questions.getQuiz() : null;
 
     }
 

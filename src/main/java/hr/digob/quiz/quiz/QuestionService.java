@@ -42,6 +42,7 @@ public class QuestionService {
         }
         mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
         Question q = mapper.convertValue(question.getQuestion(), Question.class);
+        q.setUser(user);
         topicService.addQuestion(topic.get(), q);
     }
 
@@ -54,9 +55,9 @@ public class QuestionService {
         if (topic.isEmpty()) {
             throw new NoSuchElementException("Wrong topic id");
         }
-        if (topic.get().getUser() == null || !topic.get().getUser().equals(user)) {
+        if (topic.get().getUser() != null && !topic.get().getUser().equals(user)) {
             throw new IllegalArgumentException("User is not owner of this topic");
         }
-        return topic.get().getQuiz();
+        return topic.get().getQuiz().stream().filter(q -> q.getUser().equals(user)).toList();
     }
 }

@@ -1,5 +1,6 @@
 package hr.digob.quiz.quiz.entity;
 
+import hr.digob.quiz.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class Question {
     private String question;
     @OneToMany(cascade = ALL, fetch = LAZY)
     private List<Answer> answers;
+    @OneToOne
+    private User user;
 
     public Question(String question, List<Answer> answers) {
         this.question = question;
