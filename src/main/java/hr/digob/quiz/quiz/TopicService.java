@@ -3,6 +3,7 @@ package hr.digob.quiz.quiz;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.digob.quiz.quiz.dto.QuestionDto;
+import hr.digob.quiz.quiz.entity.Question;
 import hr.digob.quiz.quiz.entity.Topic;
 import hr.digob.quiz.user.User;
 import hr.digob.quiz.user.UserService;
@@ -230,5 +231,14 @@ public class TopicService {
             return List.of();
         }
 
+    }
+
+    public Optional<Topic> findById(Long topicId) {
+        return topicRepository.findById(topicId);
+    }
+
+    public void addQuestion(Topic topic, Question q) {
+        topic.addQuestion(q);
+        topicRepository.save(topic);
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Data
 public class QuestionsDto {
     List<QuestionDto> quiz;
+
 }
