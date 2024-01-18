@@ -68,7 +68,7 @@ public class TopicService {
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        HashMap map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("text", topic.get().getContent());
 
         QuestionsDto questions = restTemplate.postForObject("http://127.0.0.1:5000/generate-questions", map, QuestionsDto.class);
