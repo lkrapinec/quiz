@@ -26,7 +26,7 @@ public class Question {
     private String question;
     @OneToMany(cascade = ALL, fetch = LAZY)
     private List<Answer> answers;
-    @OneToOne
+    @ManyToOne
     private User user;
 
     public Question(String question, List<Answer> answers) {

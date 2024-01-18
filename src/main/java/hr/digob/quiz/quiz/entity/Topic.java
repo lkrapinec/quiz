@@ -53,6 +53,9 @@ public class Topic {
     }
 
     public void addQuestion(Question q) {
+        if (quiz == null) {
+            quiz = List.of();
+        }
         quiz.add(q);
     }
 }
