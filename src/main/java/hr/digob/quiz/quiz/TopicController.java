@@ -26,9 +26,9 @@ public class TopicController {
         return ResponseEntity.ok(id);
     }
 
-    @GetMapping("/{id}/questions")
-    public ResponseEntity<List<QuestionDto>> getQuestions(Principal principal, @PathVariable String id) {
-        List<QuestionDto> questions = topicService.generateQuestions(principal, id);
+    @GetMapping("/{id}/questions/{count}")
+    public ResponseEntity<List<QuestionDto>> getQuestions(Principal principal, @PathVariable String id, @PathVariable int count) {
+        List<QuestionDto> questions = topicService.generateQuestions(principal, id, count);
         return ResponseEntity.ok(questions);
     }
 
