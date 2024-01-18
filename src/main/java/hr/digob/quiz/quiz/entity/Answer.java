@@ -17,7 +17,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String text;
     @Column
     private boolean correct;

@@ -26,9 +26,9 @@ public class Topic {
     private Long id;
     @ManyToOne
     private User user;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String title;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     public Topic(String title, String content) {

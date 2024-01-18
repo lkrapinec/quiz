@@ -22,7 +22,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String question;
     @OneToMany(cascade = ALL, fetch = LAZY)
     private List<Answer> answers;

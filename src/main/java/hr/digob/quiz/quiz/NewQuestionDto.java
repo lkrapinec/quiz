@@ -1,4 +1,4 @@
-package hr.digob.quiz.quiz.entity;
+package hr.digob.quiz.quiz;
 
 import hr.digob.quiz.quiz.dto.QuestionDto;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package hr.digob.quiz.quiz;
 
-import hr.digob.quiz.quiz.entity.NewQuestionDto;
 import hr.digob.quiz.quiz.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
