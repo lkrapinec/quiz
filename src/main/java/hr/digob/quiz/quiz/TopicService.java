@@ -1,6 +1,5 @@
 package hr.digob.quiz.quiz;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.digob.quiz.quiz.dto.QuestionDto;
 import hr.digob.quiz.quiz.entity.Question;
@@ -9,9 +8,11 @@ import hr.digob.quiz.user.User;
 import hr.digob.quiz.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class TopicService {
     }
 
     public List<QuestionDto> generateQuestions(Principal principal, String id) {
+
         User user = null;
         if (principal != null) {
             Optional<User> optionalUser = userService.findByUsername(principal.getName());
@@ -65,171 +67,13 @@ public class TopicService {
             return List.of();
         }
 
-        final String generatedQuestions = """
-                      {
-                         "quiz":[
-                            {
-                               "question":"Koje godine je prvi put objavljena Spring Framework verzija 1.0?",
-                               "answers":[
-                                  {
-                                     "text":"2004",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"2003",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"2006",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Tko je autor Spring Frameworka, objavljenog uz njegovu knjigu 'Expert One-on-One J2EE Design and Development'?",
-                               "answers":[
-                                  {
-                                     "text":"Rod Johnson",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"James Gosling",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"Martin Fowler",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Pod kojom licencom je prvi put objavljen Spring Framework?",
-                               "answers":[
-                                  {
-                                     "text":"Apache 2.0",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"MIT",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"GPL",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Koja verzija Spring Frameworka je uvela podršku za Java SE 8 i Groovy 2?",
-                               "answers":[
-                                  {
-                                     "text":"4.0",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"3.0",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"5.0",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Koja je glavna značajka Spring Frameworka 5.0?",
-                               "answers":[
-                                  {
-                                     "text":"Podrška za Reactive Streams kompatibilni Reactor Core",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"Podrška za WebSocket",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"Integracija s Hibernate",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Što predstavlja 'Spring Core Container' u Spring Frameworku?",
-                               "answers":[
-                                  {
-                                     "text":"Osnovni modul Springa",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"Modul za web aplikacije",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"Modul za sigurnost",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Koja Spring Framework verzija uključuje 'Aspect-oriented programming' mogućnosti?",
-                               "answers":[
-                                  {
-                                     "text":"1.2",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"2.0",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"3.0",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Koja verzija Spring Frameworka pruža podršku za Jakarta EE 9+?",
-                               "answers":[
-                                  {
-                                     "text":"6.0",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"5.0",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"4.0",
-                                     "correct":false
-                                  }
-                               ]
-                            },
-                            {
-                               "question":"Koja verzija Spring Frameworka je prva uvela 'Spring Boot'?",
-                               "answers":[
-                                  {
-                                     "text":"4.0",
-                                     "correct":true
-                                  },
-                                  {
-                                     "text":"3.0",
-                                     "correct":false
-                                  },
-                                  {
-                                     "text":"2.0",
-                                     "correct":false
-                                  }
-                               ]
-                            }
-                         ]
-                      }
-                """;
-        mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try {
-            return mapper.readValue(generatedQuestions, QuestionsDto.class).getQuiz();
-        } catch (JsonProcessingException e) {
-            return List.of();
-        }
+        RestTemplate restTemplate = new RestTemplate();
+        HashMap map = new HashMap<>();
+        map.put("text", topic.get().getDescription());
+
+        QuestionsDto questions = restTemplate.postForObject("http://127.0.0.1:5000/generate-questions", map, QuestionsDto.class);
+
+        return questions.getQuiz();
 
     }
 
