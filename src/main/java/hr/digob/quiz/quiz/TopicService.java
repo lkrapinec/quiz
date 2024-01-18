@@ -50,7 +50,7 @@ public class TopicService {
         return topic.getId();
     }
 
-    public List<QuestionDto> generateQuestions(Principal principal, String id) {
+    public List<QuestionDto> generateQuestions(Principal principal, String id, int count) {
 
         User user = null;
         if (principal != null) {
@@ -70,6 +70,7 @@ public class TopicService {
         RestTemplate restTemplate = new RestTemplate();
         HashMap<String, String> map = new HashMap<>();
         map.put("text", topic.get().getContent());
+        map.put("question_count", String.valueOf(count));
 
         QuestionsDto questions = restTemplate.postForObject("http://127.0.0.1:5000/generate-questions", map, QuestionsDto.class);
 
